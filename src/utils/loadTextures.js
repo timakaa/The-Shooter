@@ -1,7 +1,9 @@
 import * as THREE from "three";
 import { EXRLoader } from "three/examples/jsm/loaders/EXRLoader";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import threeStore from "../store/threeStore.js";
 import boxesStore from "../store/boxesStore.js";
+import bulletsStore from "../store/bulletsStore.js";
 
 export function loadTextures() {
   const scene = threeStore.getState().scene;
@@ -16,6 +18,7 @@ export function loadTextures() {
   // Loaders
   const textureLoader = new THREE.TextureLoader(loadingManager);
   const exrLoader = new EXRLoader(loadingManager);
+  const gltfLoader = new GLTFLoader(loadingManager);
 
   loadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
     console.log("Loading file:", url);
@@ -38,13 +41,11 @@ export function loadTextures() {
   };
 
   const floorTextureUrl = new URL("../assets/floor.jpg", import.meta.url).href;
-  let floorTexture;
 
   textureLoader.load(
     floorTextureUrl,
     (texture) => {
       // Success callback
-      floorTexture = texture;
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.RepeatWrapping;
       texture.repeat.set(200, 200);
@@ -136,5 +137,14 @@ export function loadTextures() {
     );
   });
 
-  return Promise.all([mainBoxTexture]);
+  const bulletTextureUrl = new URL("../assets/aphos.glb", import.meta.url).href;
+  const bulletTexture = new Promise((resolve) => {
+    gltfLoader.load(bulletTextureUrl, (gltf) => {
+      const bullet = gltf.scene;
+      bulletsStore.getState().setTextureMesh(bullet);
+      resolve();
+    });
+  });
+
+  return Promise.all([mainBoxTexture, bulletTexture]);
 }

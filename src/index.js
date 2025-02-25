@@ -14,6 +14,7 @@ import threeStore from "./store/threeStore";
 import cannonStore from "./store/cannonStore";
 import boxesStore from "./store/boxesStore";
 import { addBoxes } from "./utils/addBoxes";
+import bulletsStore from "./store/bulletsStore";
 
 let lastCallTime = performance.now();
 
@@ -114,7 +115,9 @@ window.addEventListener("click", (event) => {
     collisionFilterMask: -1,
   });
   ballBody.addShape(ballShape);
-  const ballMesh = new THREE.Mesh(ballGeometry, GENERIC_MATERIAL);
+  // const ballMesh = new THREE.Mesh(ballGeometry, GENERIC_MATERIAL);
+  const textureMesh = bulletsStore.getState().textureMesh;
+  const ballMesh = textureMesh.clone();
 
   ballMesh.castShadow = true;
   ballMesh.receiveShadow = true;
@@ -131,6 +134,7 @@ window.addEventListener("click", (event) => {
     shootDirection.y * shootVelocity,
     shootDirection.z * shootVelocity,
   );
+  ballBody.angularVelocity.set(4, 10, 10);
 
   // Move the ball outside the player sphere
   const x =

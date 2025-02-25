@@ -22,6 +22,7 @@ export function addBoxes() {
     roughness: 0.7,
     metalness: 0.3,
   });
+  material.color.multiplyScalar(0.4);
 
   const halfExtents = new CANNON.Vec3(3, 3, 3);
   const boxShape = new CANNON.Box(halfExtents);
