@@ -1,0 +1,27 @@
+{
+  "name": "the-shooter",
+  "version": "1.0.0",
+  "description": "The Shooter",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve",
+    "start": "pnpm build && serve dist --no-clipboard --single"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2",
+    "serve": "^14.2.4",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  },
+  "dependencies": {
+    "cannon-es": "^0.20.0",
+    "dat.gui": "^0.7.9",
+    "three": "^0.173.0",
+    "zustand": "^5.0.3"
+  }
+}
