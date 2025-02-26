@@ -3,12 +3,7 @@ import * as THREE from "three";
 import { initThree } from "./utils/initThree";
 import { loadTextures } from "./utils/loadTextures";
 import { initCannon } from "./utils/initCannon";
-import {
-  TIME_STEP,
-  GENERIC_MATERIAL,
-  COLLISION_GROUPS,
-  PLAYER_MATERIAL,
-} from "./constanst";
+import { TIME_STEP, COLLISION_GROUPS, PLAYER_MATERIAL } from "./constanst";
 import { initPointerLock } from "./utils/initPointerLock";
 import threeStore from "./store/threeStore";
 import cannonStore from "./store/cannonStore";
@@ -89,7 +84,7 @@ async function init() {
 init();
 
 // The shooting balls
-const shootVelocity = 55;
+const shootVelocity = 200;
 const ballShape = new CANNON.Sphere(0.2);
 const ballGeometry = new THREE.SphereGeometry(ballShape.radius, 32, 32);
 
@@ -115,6 +110,11 @@ window.addEventListener("click", (event) => {
     collisionFilterMask: -1,
   });
   ballBody.addShape(ballShape);
+
+  // Add CCD (Continuous Collision Detection) for bullets
+  ballBody.ccdSpeedThreshold = 0.2; // Enable CCD when velocity is above 1 unit per second
+  ballBody.ccdRadius = ballShape.radius * 0.9; // Use 90% of ball radius for CCD
+
   // const ballMesh = new THREE.Mesh(ballGeometry, GENERIC_MATERIAL);
   const textureMesh = bulletsStore.getState().textureMesh;
   const ballMesh = textureMesh.clone();

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 
-export const TIME_STEP = 1 / 60;
+export const TIME_STEP = 1 / 240;
 
 export const GENERIC_MATERIAL = new THREE.MeshStandardMaterial({
   color: 0xdddddd,
