@@ -10,7 +10,7 @@
 ### Fast Start Github
 
 ```
-git clone https://github.com/aphos-ai/the-shooter.git
+git clone https://github.com/timakaa/Three-js.git
 cd the-shooter
 npm install
 ```
